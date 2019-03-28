@@ -16,3 +16,60 @@
 // Notes:
 // Please write the code as plain PHP, it should not be object oriented, and you
 // should write it so it can be easily understood.
+
+$starting_fish = 10000;
+$percent_fish_die_per_month = 0.05;
+
+function get_number_of_fish ($starting_fish) {
+  $rows[1]['starting_fish'] = $starting_fish;
+  for($month = 1; $month <=12; $month++){
+    $rows[$month]['starting_fish'] = get_starting_fish($month, $rows);
+    $rows[$month]['fish_born'] = get_fish_born($month, $rows[$month]['starting_fish']);
+    $rows[$month]['fish_died'] = get_fish_died($rows[$month]['starting_fish']);
+    $rows[$month]['fish_leaving'] = get_fish_leaving($month,$rows);
+    $rows[$month]['ending_fish'] = get_ending_number_of_fish($rows[$month]);
+  }
+  
+  return $number_of_fish;
+}
+
+// make sure you don't go into negative
+// assume 15% of the fish from the original birthing amount, not 15% of what is left after they leave
+function get_fish_leaving($month, $rows) {
+  $fish_leaving = 0;
+  if ($month > 3) {
+    foreach($rows as $key_month => $data) {
+      $fish_leaving += $data[$key_month - 3]['fish_born'] * 0.15 ;
+    }
+  }
+  return $fish_leaving;
+}
+
+function get_ending_number_of_fish($row) {
+  return $row['starging_fish'] + $row['fish_born'] - $row['fish_died'] - $row['fish_leaving'];
+}
+
+function get_starting_fish($month, $rows) {
+  if ($month == 1) {
+    $starting_fish = $rows[1]['starting_fish'];
+  } else {
+    $starting_fish = $rows[$month-1]['ending_fish'];
+  }
+  return $starting_fish;
+}
+
+function get_fish_born($month, $fish) {
+  $fish_born = 0;
+  if ($month == 5 || $month == 6 || $month == 7) {
+    $fish_born = $fish / 2 * 3;
+  }
+  return $fish_born;
+}
+
+function get_fish_died($fish_at_beginning_of_month) {
+  return $fish_at_beginning_of_month * .05;
+}
+
+
+
+print get_number_of_fish($starting_fish) . "\n";

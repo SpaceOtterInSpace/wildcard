@@ -27,16 +27,17 @@ function get_average($date,$rows) {
 function get_average_optimized($date,$rows) {
   $total = 0;
   $counter = 0;
-  $time = strtotime($date);
+  $timestamp = strtotime($date);
+  $formatted_date = gmdate("Ymd", $timestamp);
   foreach($rows as $key => $value) {
-    if($time > strtotime($value['date'])) {
+    //we can now just compare integers
+    if($formatted_date > $value['date']) {
+      //because the code was already doing substr, we can assume that it comes in YYYYMMDD
       $year = substr($value['date'],0,4);
-      $month = substr($value['date'],5,2);
-      $day = substr($value['date'],7,2);
-      if($year <= 2008) $type='d';
-      if($type == 'd') {
+      if($year <= 2008) {
         $total += 12;
       } else {
+        $month = substr($value['date'],5,2);
         $total += $month;
       }
       $counter++;
@@ -50,6 +51,9 @@ $rows[1]['date'] = '20151208';
 $rows[2]['date'] = '20041208';
 $rows[3]['date'] = '19991208';
 
-print (get_average('20190327',$rows) == get_average_optimized('20190327',$rows)) . "\n";
-print get_average('20190327',$rows) . "\n";
-print get_average_optimized('20190327',$rows) . "\n";
+//test
+print (get_average('20190327',$rows) == get_average_optimized('20190327',$rows)) ? "Success \n" : "Failure \n";
+
+// Compare
+print "Old version " . get_average('20190327',$rows) . "\n";
+print "New Version " . get_average_optimized('20190327',$rows) . "\n";
