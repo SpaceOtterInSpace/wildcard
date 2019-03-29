@@ -45,8 +45,8 @@ function get_fish_leaving($month, $rows) {
   return $fish_leaving;
 }
 
-function get_ending_number_of_fish($row) {
-  return $row['starging_fish'] + $row['fish_born'] - $row['fish_died'] - $row['fish_leaving'];
+function get_ending_number_of_fish($month) {
+  return $month['starting_fish'] + $month['fish_born'] - $month['fish_died'] - $month['fish_leaving'];
 }
 
 function get_starting_fish($month, $rows) {
