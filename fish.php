@@ -9,7 +9,7 @@
 // Every month, 15% of newly born fish over 3 months old depart the colony.
 
 // Assumptions:
-// Off spring do not pro-create
+// Off spring do not procreate
 // Make any other assumptions you need if you are in doubt.
 // Write code to calculate the number of fish at the end of the year
 
