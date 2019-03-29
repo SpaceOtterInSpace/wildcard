@@ -17,9 +17,6 @@
 // Please write the code as plain PHP, it should not be object oriented, and you
 // should write it so it can be easily understood.
 
-$starting_fish = 10000;
-$percent_fish_die_per_month = 0.05;
-
 function get_number_of_fish ($starting_fish) {
   $months[1]['starting_fish'] = $starting_fish;
   for($month = 1; $month <=12; $month++){
@@ -70,6 +67,6 @@ function get_fish_died($fish_at_beginning_of_month) {
   return $fish_at_beginning_of_month * .05;
 }
 
-
+$starting_fish = 10000;
 
 print get_number_of_fish($starting_fish) . "\n";
