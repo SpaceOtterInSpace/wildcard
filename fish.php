@@ -26,17 +26,16 @@ function get_number_of_fish ($starting_fish) {
     $months[$month]['fish_leaving'] = get_fish_leaving($month,$months);
     $months[$month]['ending_fish'] = get_ending_number_of_fish($months[$month]);
   }
-
-  return $number_of_fish;
+  return $months[12]['ending_fish'];
 }
 
-// make sure you don't go into negative
 // assume 15% of the fish from the original birthing amount, not 15% of what is left after they leave
-function get_fish_leaving($month, $rows) {
+// This function still needs some work because it allows for more fish to leave than were actually born
+function get_fish_leaving($current_month, $months) {
   $fish_leaving = 0;
-  if ($month > 3) {
-    foreach($rows as $key_month => $data) {
-      $fish_leaving += $data[$key_month - 3]['fish_born'] * 0.15 ;
+  foreach($months as $key_month => $data) {
+    if ($current_month - 3 > $key_month) {
+      $fish_leaving += $data[$key_month]['fish_born'] * 0.15 ;
     }
   }
   return $fish_leaving;
@@ -58,13 +57,14 @@ function get_starting_fish($month, $rows) {
 function get_fish_born($month, $fish) {
   $fish_born = 0;
   if ($month == 5 || $month == 6 || $month == 7) {
-    $fish_born = $fish / 2 * 3;
+    $fish_born = $fish / 4 / 2 * 3;
   }
   return $fish_born;
 }
 
 function get_fish_died($fish_at_beginning_of_month) {
-  return $fish_at_beginning_of_month * .05;
+  $fish_died = $fish_at_beginning_of_month * .05;
+  return $fish_died;
 }
 
 $starting_fish = 10000;
