@@ -21,15 +21,15 @@ $starting_fish = 10000;
 $percent_fish_die_per_month = 0.05;
 
 function get_number_of_fish ($starting_fish) {
-  $rows[1]['starting_fish'] = $starting_fish;
+  $months[1]['starting_fish'] = $starting_fish;
   for($month = 1; $month <=12; $month++){
-    $rows[$month]['starting_fish'] = get_starting_fish($month, $rows);
-    $rows[$month]['fish_born'] = get_fish_born($month, $rows[$month]['starting_fish']);
-    $rows[$month]['fish_died'] = get_fish_died($rows[$month]['starting_fish']);
-    $rows[$month]['fish_leaving'] = get_fish_leaving($month,$rows);
-    $rows[$month]['ending_fish'] = get_ending_number_of_fish($rows[$month]);
+    $months[$month]['starting_fish'] = get_starting_fish($month, $months);
+    $months[$month]['fish_born'] = get_fish_born($month, $months[$month]['starting_fish']);
+    $months[$month]['fish_died'] = get_fish_died($months[$month]['starting_fish']);
+    $months[$month]['fish_leaving'] = get_fish_leaving($month,$months);
+    $months[$month]['ending_fish'] = get_ending_number_of_fish($months[$month]);
   }
-  
+
   return $number_of_fish;
 }
 
